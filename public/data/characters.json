@@ -1,0 +1,3 @@
+[{"id":"superviviente","name":"Superviviente","role":"Protagonista","desc":"Ejemplo: quedó atrapado en el complejo. Cuenta con una linterna y un arma para resistir las oleadas."},
+{"id":"acechador","name":"Acechador","role":"Enemigo","desc":"Ejemplo: enemigo común que avanza entre las sombras. La luz de la linterna reduce su velocidad."},
+{"id":"merodeador","name":"Merodeador","role":"Enemigo","desc":"Ejemplo: enemigo ágil que aparece en oleadas avanzadas y busca zonas sin luz."}]

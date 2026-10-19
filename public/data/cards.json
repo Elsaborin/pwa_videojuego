@@ -1,0 +1,8 @@
+[{"id":"c1","name":"Pasos silenciosos","category":"Personaje","effect":"+15% velocidad de movimiento"},
+{"id":"c2","name":"Piel dura","category":"Personaje","effect":"+20 de salud máxima"},
+{"id":"c3","name":"Haz ancho","category":"Linterna","effect":"+30% de ancho del cono de luz"},
+{"id":"c4","name":"Batería extendida","category":"Linterna","effect":"+25% de duración de batería"},
+{"id":"c5","name":"Reparación rápida","category":"Generadores","effect":"-30% de tiempo de reparación"},
+{"id":"c6","name":"Zona reforzada","category":"Generadores","effect":"+20% de área iluminada"},
+{"id":"c7","name":"Cargador extendido","category":"Arma","effect":"+8 de munición"},
+{"id":"c8","name":"Bala trazadora","category":"Arma","effect":"+15% de daño a enemigos iluminados"}]
