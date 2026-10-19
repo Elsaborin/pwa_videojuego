@@ -1,5 +1,5 @@
 export type Card = { id: string; name: string; category: string; effect: string }
-export type Character = { id: string; name: string; role: string; desc: string }
+export type Character = { id: string; name: string; role: string; desc: string; image?: string }
 export type Game = { title: string; tagline: string; story: string[]; mechanics: { title: string; text: string }[] }
 export type EventInfo = { name: string; date: string; time: string; place: string; address: string; lat: number | null; lon: number | null }
 export type Weather = { label: string; temp: number; rain: number | null }
