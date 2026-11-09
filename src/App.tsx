@@ -4,6 +4,7 @@ import Hero from './sections/Hero'
 import Game from './sections/Game'
 import Characters from './sections/Characters'
 import Cards from './sections/Cards'
+import Launch from './sections/Launch'
 import Event from './sections/Event'
 
 export default function App() {
@@ -22,6 +23,7 @@ export default function App() {
         <Game />
         <Characters />
         <Cards />
+        <Launch />
         <Event />
       </main>
       <footer className="border-t border-line px-5 py-10 text-sm text-muted">

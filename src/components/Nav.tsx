@@ -14,13 +14,13 @@ export default function Nav() {
         <nav className="hidden items-center gap-7 md:flex" aria-label="Principal">
           {links.map(([h, l]) => <a key={h} href={h} className="text-sm text-muted transition hover:text-snow">{l}</a>)}
           {can && <button onClick={install} className="text-sm text-muted hover:text-snow">Instalar app</button>}
-          <a href="#registro" className={btn()}>Registrarme</a>
+          <a href="#lanzamiento" className={btn()}>Avísame</a>
         </nav>
         <button className="grid size-10 place-items-center rounded-lg border border-line md:hidden" aria-label="Menú" aria-expanded={open} onClick={() => setOpen(!open)}>{open ? '✕' : '☰'}</button>
       </div>
       {open && (
         <nav className="flex flex-col border-t border-line/60 px-5 py-2 md:hidden" aria-label="Móvil">
-          {[...links, ['#registro', 'Registrarme']].map(([h, l]) => <a key={h} href={h} onClick={() => setOpen(false)} className="py-3 text-base text-muted hover:text-snow">{l}</a>)}
+          {[...links, ['#lanzamiento', 'Avísame']].map(([h, l]) => <a key={h} href={h} onClick={() => setOpen(false)} className="py-3 text-base text-muted hover:text-snow">{l}</a>)}
           {can && <button onClick={() => { install(); setOpen(false) }} className="py-3 text-left text-base text-muted">Instalar app</button>}
         </nav>
       )}

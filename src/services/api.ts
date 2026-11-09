@@ -8,6 +8,10 @@ const SB = import.meta.env.VITE_SUPABASE_URL as string | undefined
 const KEY = import.meta.env.VITE_SUPABASE_KEY as string | undefined
 const auth = { apikey: KEY ?? '', Authorization: `Bearer ${KEY}` }
 
+// Google Apps Script: guarda a los suscriptores en Google Sheets y envía el correo de confirmación
+const GS = import.meta.env.VITE_GOOGLE_SCRIPT_URL as string | undefined
+export const MAIL = !!GS
+
 // Lee de Supabase si hay credenciales; si no, de /public/data. Guarda copia para uso sin conexión.
 async function load<T>(table: string, file: string): Promise<T[]> {
   const cache = 'dot:' + table
@@ -29,10 +33,16 @@ export const getCharacters = () => load<Character>('characters', 'characters.jso
 export const getGame = async () => (await load<Game>('game', 'game.json'))[0]
 export const getEvent = async () => (await load<EventInfo>('events', 'event.json'))[0]
 
-// Registro al evento: se guarda en el dispositivo y, si hay Supabase, también en la nube
+// Registro y suscripción: se guarda en el dispositivo, en Google (correo de confirmación) y, si hay Supabase, también ahí
 export async function saveRegistration(r: { name: string; email: string; role: string }) {
   const list = JSON.parse(localStorage.getItem('dot:reg') || '[]')
   localStorage.setItem('dot:reg', JSON.stringify([...list, { ...r, at: new Date().toISOString() }]))
+  if (GS) {
+    // Sin cabecera Content-Type para evitar la verificación previa (CORS) de Apps Script
+    const res = await fetch(GS, { method: 'POST', body: JSON.stringify({ ...r, source: 'web' }) })
+    const d = await res.json()
+    if (!d.ok) throw new Error(d.error || 'no enviado')
+  }
   if (SB) {
     const res = await fetch(`${SB}/rest/v1/registrations`, { method: 'POST', headers: { ...auth, 'Content-Type': 'application/json' }, body: JSON.stringify(r) })
     if (!res.ok) throw new Error('no enviado')
