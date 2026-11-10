@@ -2,7 +2,7 @@ export type Card = { id: string; name: string; category: string; effect: string 
 export type Character = { id: string; name: string; role: string; desc: string; image?: string }
 export type Game = { title: string; tagline: string; story: string[]; mechanics: { title: string; text: string }[] }
 export type EventInfo = { name: string; date: string; time: string; place: string; address: string; lat: number | null; lon: number | null }
-export type Weather = { label: string; temp: number; rain: number | null }
+
 
 const SB = import.meta.env.VITE_SUPABASE_URL as string | undefined
 const KEY = import.meta.env.VITE_SUPABASE_KEY as string | undefined
@@ -34,7 +34,7 @@ export const getGame = async () => (await load<Game>('game', 'game.json'))[0]
 export const getEvent = async () => (await load<EventInfo>('events', 'event.json'))[0]
 
 // Registro y suscripción: se guarda en el dispositivo, en Google (correo de confirmación) y, si hay Supabase, también ahí
-export async function saveRegistration(r: { name: string; email: string; role: string }) {
+export async function saveRegistration(r: { name: string; email: string }) {
   const list = JSON.parse(localStorage.getItem('dot:reg') || '[]')
   localStorage.setItem('dot:reg', JSON.stringify([...list, { ...r, at: new Date().toISOString() }]))
   if (GS) {
@@ -47,18 +47,4 @@ export async function saveRegistration(r: { name: string; email: string; role: s
     const res = await fetch(`${SB}/rest/v1/registrations`, { method: 'POST', headers: { ...auth, 'Content-Type': 'application/json' }, body: JSON.stringify(r) })
     if (!res.ok) throw new Error('no enviado')
   }
-}
-
-// Servicio externo: Open-Meteo (clima, sin API key)
-export async function getWeather(lat: number, lon: number, date?: string): Promise<Weather> {
-  const u = `https://api.open-meteo.com/v1/forecast?latitude=${lat}&longitude=${lon}&timezone=auto`
-  if (date) {
-    const r = await fetch(`${u}&daily=temperature_2m_max,precipitation_probability_max&start_date=${date}&end_date=${date}`)
-    if (r.ok) {
-      const d = (await r.json()).daily
-      return { label: 'Pronóstico del evento', temp: d.temperature_2m_max[0], rain: d.precipitation_probability_max[0] }
-    }
-  }
-  const d = await (await fetch(`${u}&current=temperature_2m`)).json()
-  return { label: 'Clima actual en la sede', temp: d.current.temperature_2m, rain: null }
 }
